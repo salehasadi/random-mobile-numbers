@@ -6,7 +6,7 @@ Right now, supported countries are Germany(DE), Turkey(TR), the United Kingdom(U
 # Installation
 
 ```sh
-$ npm i random-mobile-numbers
+$ npm i random-mobile-numbers-extended
 ```
 
 # Usage
