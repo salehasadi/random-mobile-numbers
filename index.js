@@ -19,14 +19,12 @@ class PhoneNumberGenerator {
   }
 
   generatePhoneNumber() {
-    console.log(this.includeCountryCode)
     let phoneNumber = this.includeCountryCode ? this.countryCode : '';
     let phoneNumberLength = this.startingNumber ? this.phoneNumberLength - 1 : this.phoneNumberLength;
     phoneNumber += this.startingNumber ? this.startingNumber : '';
     for (let i = 0; i < phoneNumberLength; i++) {
         phoneNumber += getRandomInt(0, 9);
     }
-    console.log(phoneNumber)
     return phoneNumber;
   }
 }
