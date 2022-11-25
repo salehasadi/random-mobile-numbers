@@ -1,6 +1,6 @@
-const createMobilePhoneNumber = (countryId) => {
+const createMobilePhoneNumber = (countryId, includeCountryCode = false, startingNumber = false) => {
   const generator = new CountryPhoneNumberGenerator();
-  const phoneNumberGenerator = generator.create(countryId);
+  const phoneNumberGenerator = generator.create(countryId, includeCountryCode, startingNumber);
   return phoneNumberGenerator.generatePhoneNumber();
 };
 
@@ -12,19 +12,21 @@ function getRandomInt(min, max) {
 
 class PhoneNumberGenerator {
   constructor() {
-    this.includeCountryCode = false;
-    this.startingNumber = null;
+    this.includeCountryCode = true;
+    this.startingNumber = false;
     this.countryCode = "";
     this.phoneNumberLength = 0;
   }
 
   generatePhoneNumber() {
-    let phoneNumber = this.includeCountryCode ? this.countryCode : null;
+    console.log(this.includeCountryCode)
+    let phoneNumber = this.includeCountryCode ? this.countryCode : '';
     let phoneNumberLength = this.startingNumber ? this.phoneNumberLength - 1 : this.phoneNumberLength;
-    phoneNumber += this.startingNumber ? this.startingNumber : null;
+    phoneNumber += this.startingNumber ? this.startingNumber : '';
     for (let i = 0; i < phoneNumberLength; i++) {
         phoneNumber += getRandomInt(0, 9);
     }
+    console.log(phoneNumber)
     return phoneNumber;
   }
 }
@@ -62,19 +64,17 @@ class USAPhoneNumberGenerator extends PhoneNumberGenerator {
 }
 
 class PeruPhoneNumberGenerator extends PhoneNumberGenerator {
-  constructor(
-    includeCountryCode = true,
-    startingNumber = 9
-  ) {
+  constructor(includeCountryCode, startingNumber) {
     super();
     this.countryCode = "+51";
     this.phoneNumberLength = 9;
-    this.startingNumber = 9;
+    this.startingNumber = startingNumber;
+    this.includeCountryCode = includeCountryCode;
   }
 }
 
 class CountryPhoneNumberGenerator {
-  create(countryId, includeCountryCode, startingNumber) {
+  create(countryId, includeCountryCode = true, startingNumber) {
     if (countryId == "DE") {
       return new GermanyPhoneNumberGenerator();
     }
@@ -86,11 +86,9 @@ class CountryPhoneNumberGenerator {
     }
     if (countryId == "USA") {
       return new USAPhoneNumberGenerator();
-    } else {
-      throw Error("Unsupported Country Id");
     }
     if (countryId == "PE") {
-      return new PeruPhoneNumberGenerator(includeCountryCode, startingNumber);
+      return new PeruPhoneNumberGenerator(includeCountryCode, startingNumber = 9);
     } else {
       throw Error("Unsupported Country Id");
     }

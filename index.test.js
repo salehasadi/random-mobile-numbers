@@ -21,6 +21,15 @@ it("Should create a random USA mobile phone number", () => {
   expect(usaMobileNumber).toHaveLength(12);
   expect(usaMobileNumber).toContain("+1");
 });
+it("Should create a random Peru mobile phone number", () => {
+  const peruMobileNumber = createMobilePhoneNumber("PE", true, 9);
+  expect(peruMobileNumber).toHaveLength(12);
+  expect(peruMobileNumber).toContain("+51");
+});
+it("Should create a random Peru mobile phone number without country code", () => {
+  const peruMobileNumber = createMobilePhoneNumber("PE", false, 9);
+  expect(peruMobileNumber).toHaveLength(9);
+});
 it("Should throw Unsupported Country Id error", () => {
   expect(() => {
     createMobilePhoneNumber("LM");
